@@ -6,7 +6,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/torchapp-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/torchapp-{{ version }}.tar.gz
   sha256: f588c4e8350d39ff938d62f764439b5d38f24cf819e51f1dfda969548aa077e4
 
 build:
@@ -15,15 +15,15 @@ build:
     - torchapp-imageclassifier = torchapp.examples.image_classifier:ImageClassifier.main
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  number: 0
+  number: 1
 
 requirements:
   host:
-    - python >=3.8,<3.12
+    - python {{ python_min }}
     - poetry-core >=1.0.0
     - pip
   run:
-    - python >=3.8,<3.12
+    - python >={{ python_min }},<3.12
     - pytorch >=1.12.1
     - numpy >=1.22.0,<1.24.0
     - typer >=0.4.0
@@ -55,6 +55,7 @@ test:
     - torchapp-imageclassifier --help
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://github.com/rbturnbull/torchapp
